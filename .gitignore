@@ -1,0 +1,19 @@
+# Build directories
+build/
+bin/
+out/
+.vs/
+
+# CMake artifacts
+CMakeSettings.json
+CMakeUserPresets.json
+
+# Compiler artifacts
+*.obj
+*.exe
+*.pdb
+*.ilk
+*.idb
+*.exp
+*.lib
+*.log
