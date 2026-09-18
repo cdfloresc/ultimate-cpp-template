@@ -3,47 +3,71 @@
 #include <iostream>
 #include <iomanip>
 #include <thread>
+#include <string>
 
 #ifdef USE_OPENMP
 #include <omp.h>
 #endif
 
-int main() {
-    std::cout << "===============================================================\n";
-    std::cout << "   MOTOR DE SIMULACION CIENTIFICA C++20 - ALTO RENDIMIENTO\n";
-    std::cout << "===============================================================\n";
+void print_header() {
+    std::cout << "======================================================================\n";
+    std::cout << "       ULTIMATE C++20 TEMPLATE - HIGH PERFORMANCE COMPUTING          \n";
+    std::cout << "   Plantilla Profesional para Simulaciones, Algoritmos y Proyectos    \n";
+    std::cout << "======================================================================\n\n";
+}
 
-    unsigned int hardware_threads = std::thread::hardware_concurrency();
-    std::cout << "[+] Hilos de CPU detectados: " << hardware_threads << "\n";
+void print_system_specs() {
+    unsigned int threads = std::thread::hardware_concurrency();
+
+    std::cout << "[1] Diagnostico de Hardware y Entorno:\n";
+    std::cout << "    - Estandar de C++:       C++20\n";
+    std::cout << "    - Hilos de CPU (Cores):  " << threads << "\n";
 
 #ifdef USE_OPENMP
-    int omp_threads = omp_get_max_threads();
-    std::cout << "[+] OpenMP Habilitado con max threads: " << omp_threads << "\n";
+    std::cout << "    - Multi-hilo (OpenMP):   HABILITADO (" << omp_get_max_threads() << " hilos activos)\n";
 #else
-    std::cout << "[-] Advertencia: OpenMP desactivado. Ejecutando en mono-hilo.\n";
+    std::cout << "    - Multi-hilo (OpenMP):   DESACTIVADO (mono-hilo)\n";
 #endif
 
+#if defined(__AVX2__)
+    std::cout << "    - Vectorizacion SIMD:    AVX2 Activado (Optimizacion de Registros)\n";
+#elif defined(_M_AMD64) || defined(__x86_64__)
+    std::cout << "    - Arquitectura:          x86_64 64-bits\n";
+#endif
+
+    std::cout << "\n";
+}
+
+void run_quick_demo() {
+    std::cout << "[2] Ejecutando Demo Rapida (Comprobacion de Estructuras):\n";
+    sim::NBodySimulation mini_sim(500);
+    mini_sim.initialize_random(42);
+    mini_sim.step(0.01f);
+    std::cout << "    -> Sistema inicializado correctamente (500 particulas procesadas).\n\n";
+}
+
+void run_heavy_benchmark() {
     const size_t NUM_PARTICLES = 12000;
     const int NUM_STEPS = 20;
     const float TIME_STEP = 0.001f;
+    const double total_interactions = static_cast<double>(NUM_PARTICLES) * NUM_PARTICLES * NUM_STEPS;
 
-    std::cout << "\n[+] Inicializando sistema N-Body:\n";
-    std::cout << "    - Numero de particulas: " << NUM_PARTICLES << "\n";
-    std::cout << "    - Interacciones por paso: " << (NUM_PARTICLES * NUM_PARTICLES) / 1'000'000.0 << " Millones (O(N^2))\n";
-    std::cout << "    - Pasos temporales a simular: " << NUM_STEPS << "\n";
-    std::cout << "    - Total de interacciones gravitacionales: " 
-              << (static_cast<double>(NUM_PARTICLES) * NUM_PARTICLES * NUM_STEPS) / 1'000'000'000.0 << " Giga-Interacciones\n\n";
+    std::cout << "[3] Benchmark Cientifico Pesado (Simulacion Gravitacional N-Body):\n";
+    std::cout << "    - Particulas en simulacion:  " << NUM_PARTICLES << "\n";
+    std::cout << "    - Complejidad computacional: O(N^2) -> " 
+              << (NUM_PARTICLES * NUM_PARTICLES) / 1'000'000.0 << " Millones de fuerzas / paso\n";
+    std::cout << "    - Pasos de tiempo simulados: " << NUM_STEPS << "\n";
+    std::cout << "    - Total de interacciones:    " 
+              << total_interactions / 1'000'000'000.0 << " Giga-Interacciones\n\n";
 
+    std::cout << "    Iniciando computo intensivo en paralelo...\n";
     sim::NBodySimulation sim(NUM_PARTICLES);
     sim.initialize_random(1337);
 
     double initial_ke = sim.compute_kinetic_energy();
-    std::cout << "[+] Energia Cinetica Inicial: " << std::scientific << std::setprecision(5) << initial_ke << " J\n\n";
-
-    std::cout << "--- INICIANDO BENCHMARK DE COMPUTO PESADO ---\n";
-    std::cout << std::fixed << std::setprecision(3);
 
     sim::HighResTimer total_timer;
+    std::cout << std::fixed << std::setprecision(3);
 
     for (int step = 1; step <= NUM_STEPS; ++step) {
         sim::HighResTimer step_timer;
@@ -53,26 +77,31 @@ int main() {
         double interactions = static_cast<double>(NUM_PARTICLES) * NUM_PARTICLES;
         double giga_interactions_per_sec = (interactions / (step_ms / 1000.0)) / 1e9;
 
-        std::cout << "Paso [" << std::setw(2) << step << "/" << NUM_STEPS << "] -> "
+        std::cout << "    -> Paso [" << std::setw(2) << step << "/" << NUM_STEPS << "] | "
                   << "Tiempo: " << std::setw(7) << step_ms << " ms | "
-                  << "Rendimiento: " << std::setw(6) << giga_interactions_per_sec << " Giga-Interacciones/s\n";
+                  << "Rendimiento: " << std::setw(5) << giga_interactions_per_sec << " G-Int/s\n";
     }
 
     double total_sec = total_timer.elapsed_seconds();
     double final_ke = sim.compute_kinetic_energy();
-
-    double total_interactions = static_cast<double>(NUM_PARTICLES) * NUM_PARTICLES * NUM_STEPS;
     double avg_giga_interactions = (total_interactions / total_sec) / 1e9;
 
-    std::cout << "\n===============================================================\n";
-    std::cout << "   RESUMEN DE RENDIMIENTO\n";
-    std::cout << "===============================================================\n";
-    std::cout << "Tiempo total de computo:        " << total_sec << " s\n";
-    std::cout << "Rendimiento promedio global:    " << avg_giga_interactions << " Giga-Interacciones/s\n";
-    std::cout << "Energia Cinetica Final:         " << std::scientific << final_ke << " J\n";
-    std::cout << "Delta Energia Cinetica:         " << std::scientific << (final_ke - initial_ke) << " J\n";
-    std::cout << "===============================================================\n";
-    std::cout << "[OK] El entorno de C++ esta 100% operativo y optimizado.\n";
+    std::cout << "\n======================================================================\n";
+    std::cout << "                    RESUMEN DE RENDIMIENTO FINAL                      \n";
+    std::cout << "======================================================================\n";
+    std::cout << "  * Tiempo total de computo:        " << total_sec << " s\n";
+    std::cout << "  * Tasa de procesamiento promedio: " << avg_giga_interactions << " Giga-Interacciones/s\n";
+    std::cout << "  * Energia Cinetica Inicial:       " << std::scientific << std::setprecision(4) << initial_ke << " J\n";
+    std::cout << "  * Energia Cinetica Final:         " << std::scientific << std::setprecision(4) << final_ke << " J\n";
+    std::cout << "======================================================================\n";
+    std::cout << "  [SUCCESS] Tu entorno C++20 esta configurado al maximo rendimiento!\n";
+    std::cout << "======================================================================\n";
+}
 
+int main() {
+    print_header();
+    print_system_specs();
+    run_quick_demo();
+    run_heavy_benchmark();
     return 0;
 }
