@@ -4,25 +4,10 @@
 [![CMake](https://img.shields.io/badge/CMake-3.25%2B-064F8C.svg?style=flat-square&logo=cmake)](https://cmake.org)
 [![OpenMP](https://img.shields.io/badge/OpenMP-Multi--Threading-red.svg?style=flat-square)](https://www.openmp.org/)
 [![SIMD](https://img.shields.io/badge/SIMD-AVX2%20Optimized-brightgreen.svg?style=flat-square)](#)
-[![CI](https://img.shields.io/badge/CI-GitHub%20Actions-2088FF.svg?style=flat-square&logo=github-actions)](https://github.com)
+[![CI](https://github.com/cdfloresc/ultimate-cpp-template/actions/workflows/ci.yml/badge.svg)](https://github.com/cdfloresc/ultimate-cpp-template/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 
 Una plantilla (Starter Kit / Template) profesional y lista para producción en **C++20** con **CMake**. Diseñada tanto para principiantes que buscan una forma rápida de programar en C++ sin dolores de cabeza, como para profesionales que desarrollan **simulaciones científicas pesadas, motores de cálculo, física de partículas, renderizado y algoritmos de alto rendimiento (HPC)**.
-
----
-
-## 📋 Información para Publicar en GitHub
-
-Si vas a subir este template a tu cuenta de GitHub, aquí tienes la información recomendada para copiar y pegar:
-
-* **Repository Name (Nombre sugerido):**
-  * `ultimate-cpp-template` *(Recomendado)*
-  * `cpp-simulation-starter`
-  * `modern-cpp20-template`
-* **Description (Descripción para el repo):**
-  > 🚀 Professional C++20 template for high-performance computing, heavy simulations & algorithms. Multi-platform (Windows/Linux), OpenMP multi-threading, AVX2 SIMD, CMake presets and CI ready.
-* **Topics (Tags para GitHub):**  
-  `cpp`, `cpp20`, `cmake`, `openmp`, `simulations`, `high-performance-computing`, `template`, `starter-kit`, `scientific-computing`, `multithreading`
 
 ---
 
