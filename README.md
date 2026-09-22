@@ -81,7 +81,8 @@ La plantilla sigue las mejores prácticas de la industria y estándares de Clean
 ├── src/
 │   ├── simulation.cpp          # Lógica computacional con bucles multinúcleo en OpenMP
 │   └── main.cpp                # Punto de entrada con diagnóstico de hardware y benchmark
-├── run.cmd                     # Script Windows: compila y corre escribiendo '.\run'
+├── run.cmd                     # Script Windows CMD: compila y corre escribiendo 'run'
+├── run.ps1                     # Script Windows PowerShell: compila y corre escribiendo '.\run'
 ├── run.sh                      # Script Linux/macOS: compila y corre escribiendo './run.sh'
 └── README.md
 ```

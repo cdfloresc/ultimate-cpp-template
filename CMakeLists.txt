@@ -23,11 +23,17 @@ else()
     message(WARNING "OpenMP no encontrado, se ejecutará en mono-hilo.")
 endif()
 
-# Optimizaciones para MSVC
+# Opciones de compilación y optimización
 if(MSVC)
     target_compile_options(simulacion_benchmark PRIVATE
         $<$<CONFIG:Release>:/O2 /Oi /Ot /fp:fast /arch:AVX2 /MP>
         $<$<CONFIG:Debug>:/Od /Zi /RTC1>
         /W4
+    )
+else()
+    target_compile_options(simulacion_benchmark PRIVATE
+        $<$<CONFIG:Release>:-O3 -march=native -ffast-math>
+        $<$<CONFIG:Debug>:-O0 -g>
+        -Wall -Wextra
     )
 endif()
